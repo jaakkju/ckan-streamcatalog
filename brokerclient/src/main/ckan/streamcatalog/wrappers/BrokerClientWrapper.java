@@ -17,7 +17,7 @@ import py4j.GatewayServer;
 public class BrokerClientWrapper {
 	static final Logger logger = Logger.getLogger(BrokerClientWrapper.class.getName());
 	static final String PROPERTIES_FILE = "brokerclient.properties";
-	private BrokerClient brokerClient = null;
+	private BrokerClient brokerClient;
 
 	public BrokerClientWrapper() throws IOException, AuthenticationExceptionException {
 		Properties properties = new Properties();
