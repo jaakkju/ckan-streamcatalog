@@ -1,5 +1,10 @@
 *.py[cod]
 
+# Java
+target/
+*.log
+.project
+
 # C extensions
 *.so
 
@@ -19,7 +24,7 @@ lib
 lib64
 __pycache__
 
-# Installer logs
+# Logs
 pip-log.txt
 
 # Unit test / coverage reports
