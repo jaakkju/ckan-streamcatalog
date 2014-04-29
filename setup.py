@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.0'
+version = '0.0.1'
 
 setup(
     name='ckanext-streamcatalog',
@@ -24,7 +24,6 @@ setup(
     ],
     entry_points='''
         [ckan.plugins]
-        # Add plugins here, e.g.
-        # myplugin=ckanext.streamcatalog.plugin:PluginClass
-    ''',
+        streamcatalog=ckanext.streamcatalog.plugin:StreamCatalogPlugin
+        ''',
 )

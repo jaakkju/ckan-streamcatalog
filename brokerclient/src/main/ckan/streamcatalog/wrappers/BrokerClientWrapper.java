@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
+import org.apache.axis2.AxisFault;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.event.client.broker.BrokerClient;
 import org.wso2.carbon.event.client.broker.BrokerClientException;
@@ -18,12 +19,13 @@ public class BrokerClientWrapper {
 	static final Logger logger = Logger.getLogger(BrokerClientWrapper.class.getName());
 	static final String PROPERTIES_FILE = "brokerclient.properties";
 	private BrokerClient brokerClient;
+	Properties properties;
 
 	public BrokerClientWrapper() throws IOException, AuthenticationExceptionException {
-		Properties properties = new Properties();
 
 		try {
 			InputStream in = new FileInputStream(PROPERTIES_FILE);
+			properties = new Properties();
 			properties.load(in);
 
 			logger.info("Properties file succesfully loaded");
@@ -32,46 +34,59 @@ public class BrokerClientWrapper {
 			System.setProperty("javax.net.ssl.trustStore", properties.getProperty("ESB.TrustStore"));
 			System.setProperty("javax.net.ssl.trustStorePassword", properties.getProperty("ESB.TrustStorePassword"));
 
-			brokerClient = new BrokerClient(properties.getProperty("ESB.Url"), properties.getProperty("ESB.User.ID"),
-			      properties.getProperty("ESB.Password"));
-
-		} catch (IOException | AuthenticationExceptionException err) {
+		} catch (IOException err) {
 			logger.error(err);
 			throw err;
 		}
 	}
 
-	public String subscribe(String topicID, String eventSinkUrl) throws BrokerClientException {
+	public Boolean createTopic(String topicID) throws RemoteException, BrokerClientException, AuthenticationExceptionException {
 		try {
+			String suID = subscribe(topicID, "/dev/null");
+			return unsubscribe(suID);
+		} catch (RemoteException | BrokerClientException | AuthenticationExceptionException err) {
+			logger.error(err);
+			throw err;
+		}
+	}
+
+	public String subscribe(String topicID, String eventSinkUrl) throws BrokerClientException, AuthenticationExceptionException, AxisFault {
+		try {
+			brokerClient = new BrokerClient(properties.getProperty("ESB.Url"), properties.getProperty("ESB.User.ID"),
+			      properties.getProperty("ESB.Password"));
 			String suID = brokerClient.subscribe(topicID, eventSinkUrl);
 			logger.info("Creating - Subscription: " + suID + " Topic: " + topicID + " URL: " + eventSinkUrl);
 			return suID;
 
-		} catch (BrokerClientException err) {
+		} catch (BrokerClientException | AxisFault | AuthenticationExceptionException err) {
 			logger.error(err);
 			throw err;
 		}
 	}
 
-	public boolean unsubscribe(String suID) {
+	public boolean unsubscribe(String suID) throws RemoteException, AuthenticationExceptionException {
 		try {
+			brokerClient = new BrokerClient(properties.getProperty("ESB.Url"), properties.getProperty("ESB.User.ID"),
+			      properties.getProperty("ESB.Password"));
 			brokerClient.unsubscribe(suID);
 			logger.info("Unsubscribing ID: " + suID);
 			return true;
-		} catch (RemoteException err) {
+		} catch (RemoteException | AuthenticationExceptionException err) {
 			logger.error(err);
-			return false;
+			throw err;
 		}
 	}
 
 	// Note: there might be problems here with Py4j since we are returning java objects 
-	public SubscriptionDetails[] getAllSubscriptions() throws RemoteException {
+	public SubscriptionDetails[] getAllSubscriptions() throws RemoteException, AuthenticationExceptionException {
 		try {
+			brokerClient = new BrokerClient(properties.getProperty("ESB.Url"), properties.getProperty("ESB.User.ID"),
+			      properties.getProperty("ESB.Password"));
 			SubscriptionDetails[] subsriptions = brokerClient.getAllSubscriptions();
 			logger.info("Count all subscriptions: " + subsriptions != null ? subsriptions.length : "0");
 			return subsriptions;
 
-		} catch (RemoteException err) {
+		} catch (RemoteException | AuthenticationExceptionException err) {
 			logger.error(err);
 			throw err;
 		}

@@ -1,0 +1,83 @@
+{% ckan_extends %}
+
+{% block resource_content %}
+	{{ super() }}
+	<p>Jos resource type on stream, näytetään renderöidään stream catalog sisältö</p>
+	<br>
+	<form class="form-inline" role="form">
+		<input class="form-control" type="text" placeholder="eg. http:www.example.com/receiving/service" style="width: 82%">
+		<div class="btn btn-primary">Subsciebe</div>
+	</form>
+	<table class="table table-hover">
+	    <colgroup>
+	       <col span="1" style="width: 10%;">
+	       <col span="1" style="width: 70%;">
+	       <col span="1" style="width: 20%;">
+	    </colgroup>	
+		<thead>
+			<tr>
+				<th>#</th>
+				<th colspan="2">Receiving Service URL</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>http://www.example.com/receive</td>
+				<td style="text-align: center"><div class="btn btn-primary btn-xs" href="">Delete</div></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>http://storage.mmea.com/receive</td>
+				<td style="text-align: center"><div class="btn btn-primary btn-xs" href="">Delete</div></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>http://view.wirepass.com/service</td>
+				<td style="text-align: center"><div class="btn btn-primary btn-xs" href="">Delete</div></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>http://www.example-one.com/receive</td>
+				<td style="text-align: center"><div class="btn btn-primary btn-xs" href="#">Delete</div></td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>http://www.example-two.com/receive</td>
+				<td style="text-align: center"><div class="btn btn-primary btn-xs" href="#">Delete</div></td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>http://www.example-two.com/receive</td>
+				<td style="text-align: center"><div class="btn btn-primary btn-xs" href="#">Delete</div></td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>http://www.example-two.com/receive</td>
+				<td style="text-align: center"><div class="btn btn-primary btn-xs" href="#">Delete</div></td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-striped">
+	    <colgroup>
+	       <col span="1" style="width: 30%;">
+	       <col span="1" style="width: 70%;">
+	    </colgroup>		
+		<thead>
+			<tr>
+				<th colspan="2">Statistic</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr style="text-align: left">
+			<td>Created</td>
+			<td >14.04.2014</td>
+		</tr>
+		<tr>
+			<td>Messages</td>
+			<td>136436</td>
+		</tr>
+		</tbody>
+	</table>			
+	
+{% endblock %}

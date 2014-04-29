@@ -4,6 +4,7 @@
 target/
 *.log
 .project
+.jar
 
 # C extensions
 *.so

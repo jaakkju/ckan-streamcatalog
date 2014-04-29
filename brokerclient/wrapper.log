@@ -406,3 +406,5 @@
 14:26:39,928 ERROR BrokerClientWrapper:58 - org.apache.axis2.AxisFault: java.lang.NullPointerException
 14:38:24,018 ERROR BrokerClientWrapper:58 - org.apache.axis2.AxisFault: java.lang.NullPointerException
 14:39:35,044 ERROR BrokerClientWrapper:58 - org.apache.axis2.AxisFault: java.lang.NullPointerException
+18:10:58,331 ERROR BrokerClientWrapper:39 - org.apache.axis2.AxisFault: Connection refused: connect
+18:10:58,332 ERROR BrokerClientWrapper:91 - org.apache.axis2.AxisFault: Connection refused: connect

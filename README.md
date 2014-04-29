@@ -8,21 +8,7 @@ Project started 24.03.2014
 Project notes
 -------------
 
-## Guides
-
-Install Python paster script
-sudo apt-get install python-pastescript
-
-Activate CKAN virtual environment
-. /usr/lib/ckan/default/bin/activate
-
-Create new extension template
-sudo paster --plugin=ckan create -t ckanext ckanext-iauthfunctions
-
 ## Extension information
-
-CKAN source folder
-cd /usr/lib/ckan/default/src
 
 Extension name:
 ckannext-streamcatalog
@@ -30,8 +16,47 @@ ckannext-streamcatalog
 Description:
 Stream Catalog extends CKAN to support data stream publishing and subscription"
 
+CKAN source folder
+/usr/lib/ckan/default/src
+
 Git URL.
 git@github.com:nullbox/ckan-streamcatalog.git
+
+
+## Guides
+
+Java 7 installation - needed by BrokerClient
+> sudo apt-get install openjdk-7-jdk
+> sudo update-alternatives --config java
+
+Configuring $JAVA_HOME by editing /etc/environment - needed by WSO2 ESB
+> sudo nano /etc/environment -> Add $JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+> source /etc/environment
+
+Install Python paster script - To create extension template
+> sudo apt-get install python-pastescript
+
+Create new extension template
+> sudo paster --plugin=ckan create -t ckanext ckanext-iauthfunctions
+
+Activate CKAN virtual environment
+> . /usr/lib/ckan/default/bin/activate
+
+Install streamcatalog plugin
+> cd ../[StreamCatalog home]/
+> python setup.py develop
+
+Add plugin to CKAN by editing - find section "ckan.plugins = ..." and append " streamcatalog"
+> sudo nano /etc/ckan/default/production.ini
+
+## Install Py4J
+> wget http://sourceforge.net/projects/py4j/files/0.8.1/py4j-0.8.1.tar.gz/download -O py4j-0.8.1.tar.gz
+> tar -zxvf py4j-0.8.1.tar.gz
+> sudo mv py4j-0.8.1 /opt/.
+
+Run Python install in the Py4j folder to install 
+> sudo python setup.py install 
+
 
 ## TODO:
 - [X] Development environment -> Check. vagrant-ckan-bash repository
@@ -49,3 +74,16 @@ git@github.com:nullbox/ckan-streamcatalog.git
 - [X] Pass wrapper exeptions to Python, but log them first
 - [ ] BrokerClient connection should be preserved long as possible. How long it actually is connected? Timeout somewhere?
 - [ ] You can not remove a topic with BrokerClient, damned, fix this somehow?
+- [ ] Make Ant build script to build the Jar file -> Example from CommonBase project..btw. The jar file includes whole lot of unnecessary stuff. 51mb in total??!
+- [X] Expose publish / subscriebe & CreateTopic functions to CKAN interface
+- [X] Install Py4J to virtual environment
+- [ ] Implement IResourcePreview plugin interface
+- [ ] Implement same origin policy properly in Stream Preview
+
+
+## CKAN implementation - Finding a place for hook
+class ckan.plugins.interfaces.ITemplateHelpers <- Add custom template helper functions
+class ckan.plugins.interfaces.IMiddleware <- Hook into Pylons middleware stack
+ckan.plugins.interfaces.IDatasetForm <- Customize CKAN’s dataset (package) schemas and forms.
+
+"By implementing this interface plugins can customise CKAN’s dataset schema, for example to add new custom fields to datasets."
