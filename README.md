@@ -2,11 +2,11 @@ ckan-streamcatalog
 ==================
 
 Stream Catalog extends CKAN to support data stream publishing and subscription
+Author: Juhani Jaakkola, juhani.jaakkola@hiq.fi
+Initial Creation: 24.03.2014 
 
-Project started 24.03.2014
-
-Project notes
--------------
+Description
+-----------
 
 ## Extension information
 
@@ -23,7 +23,17 @@ Git URL.
 git@github.com:nullbox/ckan-streamcatalog.git
 
 
-## Guides
+## Installation
+
+### Install Py4J
+> wget http://sourceforge.net/projects/py4j/files/0.8.1/py4j-0.8.1.tar.gz/download -O py4j-0.8.1.tar.gz
+> tar -zxvf py4j-0.8.1.tar.gz
+> sudo mv py4j-0.8.1 /opt/.
+
+Run Python install in the Py4j folder to install 
+> sudo python setup.py install 
+
+### Py4J BrokerClient wrapper
 
 Java 7 installation - needed by BrokerClient
 > sudo apt-get install openjdk-7-jdk
@@ -32,6 +42,13 @@ Java 7 installation - needed by BrokerClient
 Configuring $JAVA_HOME by editing /etc/environment - needed by WSO2 ESB
 > sudo nano /etc/environment -> Add $JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 > source /etc/environment
+
+### Configuring StreamCatalog plugin
+
+<-- Not needed????
+Create symbolic link to StreamCatalog plugin location
+> sudo ln -s /vagrant/repository/ckanext-streamcatalog /usr/lib/ckan/default/src/ckan/ckanext/
+-->
 
 Install Python paster script - To create extension template
 > sudo apt-get install python-pastescript
@@ -42,20 +59,12 @@ Create new extension template
 Activate CKAN virtual environment
 > . /usr/lib/ckan/default/bin/activate
 
-Install streamcatalog plugin
+Install streamcatalog plugin to Python environment
 > cd ../[StreamCatalog home]/
-> python setup.py develop
+> sudo python setup.py develop
 
 Add plugin to CKAN by editing - find section "ckan.plugins = ..." and append " streamcatalog"
 > sudo nano /etc/ckan/default/production.ini
-
-## Install Py4J
-> wget http://sourceforge.net/projects/py4j/files/0.8.1/py4j-0.8.1.tar.gz/download -O py4j-0.8.1.tar.gz
-> tar -zxvf py4j-0.8.1.tar.gz
-> sudo mv py4j-0.8.1 /opt/.
-
-Run Python install in the Py4j folder to install 
-> sudo python setup.py install 
 
 
 ## TODO:
@@ -80,8 +89,13 @@ Run Python install in the Py4j folder to install
 - [ ] Implement IResourcePreview plugin interface
 - [ ] Implement same origin policy properly in Stream Preview
 
+- [ ] Wrap StreamCatalog functions to ajax/rest interface, so they could be called from jQuery (if possible)
 
-## CKAN implementation - Finding a place for hook
+
+Other notes
+-----------
+
+### CKAN implementation - Finding a place for hook
 class ckan.plugins.interfaces.ITemplateHelpers <- Add custom template helper functions
 class ckan.plugins.interfaces.IMiddleware <- Hook into Pylons middleware stack
 ckan.plugins.interfaces.IDatasetForm <- Customize CKAN’s dataset (package) schemas and forms.
