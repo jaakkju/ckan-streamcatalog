@@ -45,11 +45,6 @@ Configuring $JAVA_HOME by editing /etc/environment - needed by WSO2 ESB
 
 ### Configuring StreamCatalog plugin
 
-<-- Not needed????
-Create symbolic link to StreamCatalog plugin location
-> sudo ln -s /vagrant/repository/ckanext-streamcatalog /usr/lib/ckan/default/src/ckan/ckanext/
--->
-
 Install Python paster script - To create extension template
 > sudo apt-get install python-pastescript
 
@@ -58,6 +53,10 @@ Create new extension template
 
 Activate CKAN virtual environment
 > . /usr/lib/ckan/default/bin/activate
+
+Create test data to CKAN database
+> . /usr/lib/ckan/default/bin/activate
+> sudo ckan create-test-data
 
 Install streamcatalog plugin to Python environment
 > cd ../[StreamCatalog home]/
@@ -83,7 +82,8 @@ Add plugin to CKAN by editing - find section "ckan.plugins = ..." and append " s
 - [X] Pass wrapper exeptions to Python, but log them first
 - [ ] BrokerClient connection should be preserved long as possible. How long it actually is connected? Timeout somewhere?
 - [ ] You can not remove a topic with BrokerClient, damned, fix this somehow?
-- [ ] Make Ant build script to build the Jar file -> Example from CommonBase project..btw. The jar file includes whole lot of unnecessary stuff. 51mb in total??!
+- [ ] Make Ant build script to build the Jar file -> Example from CommonBase project..btw. 
+		The jar file includes whole lot of unnecessary stuff, 51mb in total??!
 - [X] Expose publish / subscriebe & CreateTopic functions to CKAN interface
 - [X] Install Py4J to virtual environment
 - [ ] Implement IResourcePreview plugin interface
