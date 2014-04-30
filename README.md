@@ -19,9 +19,8 @@ Stream Catalog extends CKAN to support data stream publishing and subscription"
 CKAN source folder
 /usr/lib/ckan/default/src
 
-Git URL.
+Git URL:
 git@github.com:nullbox/ckan-streamcatalog.git
-
 
 ## Installation
 
