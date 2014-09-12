@@ -22,12 +22,24 @@ def createTopic():
 def subscribe(topicID, eventSinkUrl):
     return brokerclient.subscribe(topicID, eventSinkUrl)
 
-def unsubscriebe(suID):
+def unsubscribe(suID):
     return brokerclient.unsubscribe(suID)
 
-# This returns a Java object, it might be a problem
-def getAllSubscriptions():
-    return brokerclient.getAllSubscriptions()
+def getAllSubscriptions(package_id = None, user_id = None):
+    import ckan.model as model
+    
+    q = model.Session.query(model.User, model.Resource) \
+             .join(model.Activity, model.Activity.user_id==model.User.id) \
+             .join(model.ActivityDetail, model.ActivityDetail.activity_id==model.Activity.id) \
+             .join(model.Resource, model.ActivityDetail.object_id==model.Resource.id)
+    if package_id:
+        q = q.filter(model.Activity.object_id == package_id)
+    if user_id:
+        q = q.filter(model.Activity.user_id == user_id)
+    q = q.filter(model.ActivityDetail.object_type == 'Resource')
+    q = q.filter(model.ActivityDetail.activity_type == 'new')
+
+    return q.all()
 
 
 class StreamCatalogPlugin(p.SingletonPlugin):
@@ -71,8 +83,8 @@ class StreamCatalogPlugin(p.SingletonPlugin):
         # extension they belong to, to avoid clashing with functions from
         # other extensions.
         return {
-                'streamcatalog_subscriebe': subscribe,
-                'streamcatalog_unsubscriebe': unsubscriebe,
+                'streamcatalog_subscribe': subscribe,
+                'streamcatalog_unsubscribe': unsubscribe,
                 'streamcatalog_getAllSubscriptions': getAllSubscriptions,
                 'streamcatalog_createTopic': createTopic
             }
