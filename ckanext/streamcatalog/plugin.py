@@ -54,6 +54,7 @@ class StreamCatalogPlugin(p.SingletonPlugin):
     def before_map(self, map):
         map.connect('/streamcatalog/tulosta', controller='ckanext.streamcatalog.controller:StreamCatalogController', action='tulosta')
         map.connect('/dataset/new_resource/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='new_resource')
+        map.connect('/dataset/{id}/resource_delete/{resource_id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='resource_delete')
         return map
     
     def can_preview(self, data_dict):
