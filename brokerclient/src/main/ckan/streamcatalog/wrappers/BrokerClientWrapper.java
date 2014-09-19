@@ -6,8 +6,13 @@ import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
+import javax.xml.namespace.QName;
+
 import org.apache.axis2.AxisFault;
 import org.apache.log4j.Logger;
+import org.apache.axiom.om.OMAbstractFactory;
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.OMFactory;
 import org.wso2.carbon.event.client.broker.BrokerClient;
 import org.wso2.carbon.event.client.broker.BrokerClientException;
 import org.wso2.carbon.event.client.stub.generated.SubscriptionDetails;
@@ -86,6 +91,24 @@ public class BrokerClientWrapper {
 			logger.info("Count all subscriptions: " + subsriptions != null ? subsriptions.length : "0");
 			return subsriptions;
 
+		} catch (RemoteException | AuthenticationExceptionException err) {
+			logger.error(err);
+			throw err;
+		}
+	}
+
+	/**
+	 * Publish (send) a message to given WSO2 ESB topic.
+	 */
+	public boolean publish(String topic, String message) throws RemoteException, AuthenticationExceptionException {
+		try {
+			brokerClient = new BrokerClient(properties.getProperty("ESB.Url"), properties.getProperty("ESB.User.ID"),
+			      properties.getProperty("ESB.Password"));
+			OMFactory fac = OMAbstractFactory.getOMFactory();
+			OMElement ele = fac.createOMElement(new QName("http://wso2.org", topic));
+			ele.setText(message);
+			brokerClient.publish(topic, ele);
+			return true;
 		} catch (RemoteException | AuthenticationExceptionException err) {
 			logger.error(err);
 			throw err;
