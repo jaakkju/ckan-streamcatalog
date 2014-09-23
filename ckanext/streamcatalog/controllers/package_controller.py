@@ -49,6 +49,26 @@ def getResourceUrlName(resource_name):
 
 class package(PackageController):
 
+    def publish(self, id):
+        ''' Publishes (sends) a message to WSO2 ESB Topic related to the dataset. '''
+        
+        data = clean_dict(unflatten(tuplize_dict(parse_params(request.POST))))
+        
+        if 'message' in data and isinstance(data['message'], basestring):
+            if c.userobj.sysadmin:
+                package_id = getPackageIdFromName(id)
+                brokerclient = getBrokerClient()
+                if brokerclient.publish(package_id, data['message']):
+                    h.flash_notice(_('The message was sent.'))
+                else:
+                    h.flash_error(_('Error sending the message.'))
+            else:
+                h.flash_error(_('Error: sysadmin rights required to send a message.'))
+        else:
+            h.flash_error(_('Error: no message was provided.'))
+
+        return super(package, self).read(id)
+
     def new_resource(self, id, data=None, errors=None, error_summary=None):
         if request.method == 'POST' and not data:
             # Recogniced new resource form POST, extract variables.

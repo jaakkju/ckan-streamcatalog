@@ -1,4 +1,4 @@
-{% ckan_extends %}
+l{% ckan_extends %}
 
 {% import 'macros/form.html' as form -%}
 
@@ -25,5 +25,12 @@
   {% endif %}
 
   {% snippet "package/snippets/subscriptions_list.html", pkg=pkg, susbcriptions=susbcriptions, state='deleted' %}
+
+  {% if c.userobj and c.userobj.sysadmin -%}
+    <form class="dataset-form dataset-resource-form form-horizontal" method="post" action="/dataset/{{ pkg.name }}/publish" data-module="basic-form resource-form">
+      {{ form.textarea('message', id='field-message', label=_('Message'), placeholder='', value='', error={}, classes=['control-full', 'control-large']) }}
+      <button class="btn btn-primary" name="save" value="go-dataset-complete" type="submit" style="margin-top: -102px;">{{ _('Send') }}</button>
+    </form>
+  {% endif -%}
 
 {% endblock %}
