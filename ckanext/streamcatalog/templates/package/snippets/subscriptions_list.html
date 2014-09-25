@@ -11,23 +11,28 @@ Example:
 
 #}
 {% if susbcriptions %}
-  <h3>{{ _(state) }} {{ _('Subscriptions') }}</h3>
+  <h3>{% if state == 'active' %}{{ _('Active Subscriptions') }}{% elif state == 'deleted' %}{{ _('Deleted Subscriptions') }}{% endif %}</h3>
   <table class="table table-striped table-bordered table-condensed">
-    <tr><th>{{ _('User') }}</th><th>Url</th><th>{{ _('State') }}</th></tr>
+    <colgroup>
+      <col span="1" style="">
+      <col span="1" style="">
+      <col span="1" style="width: 90px;">
+      <col span="1" style="width: 90px;">
+    </colgroup>
+    <tr><th>{{ _('User') }}</th><th>Url</th><th>{{ _('State') }}</th><th></th></tr>
     {% for susbcription in susbcriptions -%}
       {% if susbcription.Resource.state == state -%}
       <tr>
         <td>{{ susbcription.User.name }}</td>
         <td>{{ susbcription.Resource.url }}</td>
-        <td>
-          {{ _(susbcription.Resource.state) }}
-          {% if susbcription.Resource.state == 'active' %}
+        <td>{{ _(susbcription.Resource.state) }}</td>
+        <td>&nbsp;
+          {%- if susbcription.Resource.state == 'active' %}
             {% if h.check_access('resource_delete', {'id': susbcription.Resource.id}) -%}
               {% set locale = h.dump_json({'content': _('Are you sure you want to delete this resource?')}) -%}
               <a class="btn btn-danger pull-left" href="{% url_for controller='package', action='resource_delete', resource_id=susbcription.Resource.id, id=pkg.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{{ _('Delete') }}</a>
             {% endif -%}
           {% endif -%}
-        </td>
       </tr>
       {% endif -%}
     {% endfor -%}
