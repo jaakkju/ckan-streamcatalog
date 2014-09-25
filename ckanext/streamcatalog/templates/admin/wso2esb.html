@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+
+{% block primary_content_inner %}
+  {% if c.subscriptions %}
+    <table class="table table-hover">
+      <tr><th>Topic</th><th>Topic ID</th><th>Receiver URL</th></tr>
+      {% for subscription in c.subscriptions %}
+        <tr><td>{{ subscription.localTopic }}</td><td>{{ subscription.localSubscriptionId }}</td><td>{{ subscription.localEventSinkAddress }}</td></tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+{% endblock %}

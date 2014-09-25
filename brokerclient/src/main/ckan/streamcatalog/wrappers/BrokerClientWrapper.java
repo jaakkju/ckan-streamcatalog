@@ -20,6 +20,11 @@ import org.wso2.carbon.event.client.stub.generated.authentication.Authentication
 
 import py4j.GatewayServer;
 
+import java.lang.reflect.Field;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+
 public class BrokerClientWrapper {
 	static final Logger logger = Logger.getLogger(BrokerClientWrapper.class.getName());
 	static final String PROPERTIES_FILE = "brokerclient.properties";
@@ -82,14 +87,16 @@ public class BrokerClientWrapper {
 		}
 	}
 
-	// Note: there might be problems here with Py4j since we are returning java objects 
-	public SubscriptionDetails[] getAllSubscriptions() throws RemoteException, AuthenticationExceptionException {
+	// Circumvented problems with returning Java objects using JSON.
+	public String getAllSubscriptions() throws RemoteException, AuthenticationExceptionException {
 		try {
 			brokerClient = new BrokerClient(properties.getProperty("ESB.Url"), properties.getProperty("ESB.User.ID"),
 			      properties.getProperty("ESB.Password"));
 			SubscriptionDetails[] subsriptions = brokerClient.getAllSubscriptions();
 			logger.info("Count all subscriptions: " + subsriptions != null ? subsriptions.length : "0");
-			return subsriptions;
+
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			return gson.toJson(subsriptions);
 
 		} catch (RemoteException | AuthenticationExceptionException err) {
 			logger.error(err);

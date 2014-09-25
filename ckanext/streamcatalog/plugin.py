@@ -52,6 +52,7 @@ class StreamCatalogPlugin(p.SingletonPlugin):
     stream_types = ['stream.json', 'stream.xml']
 
     def before_map(self, map):
+        map.connect('/ckan-admin/wso2esb', controller='ckanext.streamcatalog.controllers.admin_controller:admin', action='wso2esb')
         map.connect('/dataset/new_resource/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='new_resource')
         map.connect('/dataset/{id}/resource_delete/{resource_id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='resource_delete')
         map.connect('/dataset/{id}/publish', controller='ckanext.streamcatalog.controllers.package_controller:package', action='publish')
