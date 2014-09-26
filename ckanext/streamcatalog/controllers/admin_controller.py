@@ -2,18 +2,12 @@
 # -*- coding: utf-8 -*-
 from ckan.controllers.admin import AdminController
 
-import ckan.lib.base as base
+from ckan.lib.base import render
 from ckan.common import c
 
 import json
 
-
-def getBrokerClient():
-    ''' Gets BrokerClientWrapper java class to communicate with WSO2 ESB. '''
-
-    from py4j.java_gateway import JavaGateway
-    gateway = JavaGateway()
-    return gateway.entry_point
+from ckanext.streamcatalog.controllers.wso2esb_controller import getBrokerClient
 
 
 class admin(AdminController):
@@ -24,8 +18,6 @@ class admin(AdminController):
         brokerclient = getBrokerClient()
         subscriptions = brokerclient.getAllSubscriptions()
 
-        from py4j.java_gateway import get_method, get_field
-
         c.subscriptions = json.loads(subscriptions)
         
-        return base.render('admin/wso2esb.html')
+        return render('admin/wso2esb.html')
