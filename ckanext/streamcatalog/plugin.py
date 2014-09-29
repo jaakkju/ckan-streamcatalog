@@ -22,6 +22,16 @@ def getAllSubscriptions(package_id = None, user_id = None):
     # Execute the query and return all results from it.
     return q.all()
 
+def countSubscriptions(subscriptions, state = 'active'):
+
+    subscription_count = 0
+
+    for subscription in subscriptions:
+        if subscription.Resource.state == state:
+            subscription_count = subscription_count + 1
+
+    return subscription_count
+
 ''' The extension plugin. '''
 
 class StreamCatalogPlugin(p.SingletonPlugin):
@@ -56,4 +66,5 @@ class StreamCatalogPlugin(p.SingletonPlugin):
         # other extensions.
         return {
                 'streamcatalog_getAllSubscriptions': getAllSubscriptions,
+                'streamcatalog_countSubscriptions': countSubscriptions,
             }
