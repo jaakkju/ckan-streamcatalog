@@ -53,7 +53,9 @@ class StreamCatalogPlugin(p.SingletonPlugin):
         map.connect('/dataset/new_resource/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='new_resource')
         map.connect('/dataset/{id}/resource_delete/{resource_id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='resource_delete')
         map.connect('/dataset/{id}/publish', controller='ckanext.streamcatalog.controllers.package_controller:package', action='publish')
+
         map.connect('/dataset/activity/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='activity')
+        map.connect('/group/activity/{id}/{offset}', controller='ckanext.streamcatalog.controllers.group_controller:group', action='activity')
 
         return map
 

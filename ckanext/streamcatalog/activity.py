@@ -333,6 +333,42 @@ def package_activity_list_html(context, data_dict):
         }
     return activity_list_to_html(context, activity_stream, extra_vars)
 
+def group_activity_list(context, data_dict):
+    '''Return a group's activity stream.
+
+    You must be authorized to view the group.
+
+    :param id: the id or name of the group
+    :type id: string
+    :param offset: where to start getting activity items from
+        (optional, default: 0)
+    :type offset: int
+    :param limit: the maximum number of activities to return
+        (optional, default: 31, the default value is configurable via the
+        ckan.activity_list_limit setting)
+    :type limit: int
+
+    :rtype: list of dictionaries
+
+    '''
+    # FIXME: Filter out activities whose subject or object the user is not
+    # authorized to read.
+    _check_access('group_show', context, data_dict)
+
+    model = context['model']
+    group_id = data_dict.get('id')
+    offset = data_dict.get('offset', 0)
+    limit = int(
+        data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
+
+    # Convert group_id (could be id or name) into id.
+    group_show = logic.get_action('group_show')
+    group_id = group_show(context, {'id': group_id})['id']
+
+    activity_objects = model.activity.group_activity_list(group_id,
+            limit=limit, offset=offset)
+    return model_dictize.activity_list_dictize(activity_objects, context)
+
 def group_activity_list_html(context, data_dict):
     '''Return a group's activity stream as HTML.
 
