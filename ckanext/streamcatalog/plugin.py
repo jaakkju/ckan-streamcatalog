@@ -49,10 +49,11 @@ class StreamCatalogPlugin(p.SingletonPlugin):
         # New views. Note the inclusion of an extra parameter, which enables native menu item linking.
         map.connect('ckanadmin_wso2esb', '/ckan-admin/wso2esb', controller='ckanext.streamcatalog.controllers.admin_controller:admin', action='wso2esb')
         
-        # Redirects.
+        # WSO2 ESB related redirects.
         map.connect('/dataset/new_resource/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='new_resource')
         map.connect('/dataset/{id}/resource_delete/{resource_id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='resource_delete')
         map.connect('/dataset/{id}/publish', controller='ckanext.streamcatalog.controllers.package_controller:package', action='publish')
+        map.connect('/dataset/activity/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='activity')
 
         return map
 

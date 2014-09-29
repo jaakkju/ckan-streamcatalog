@@ -1,6 +1,7 @@
 import re
 import datetime
 
+from pylons import config
 from webhelpers.html import literal
 
 import ckan.lib.helpers as h
@@ -265,6 +266,43 @@ def user_activity_list_html(context, data_dict):
         'offset': offset,
         }
     return activity_list_to_html(context, activity_stream, extra_vars)
+
+def package_activity_list(context, data_dict):
+    '''Return a package's activity stream.
+
+    You must be authorized to view the package.
+
+    :param id: the id or name of the package
+    :type id: string
+    :param offset: where to start getting activity items from
+        (optional, default: 0)
+    :type offset: int
+    :param limit: the maximum number of activities to return
+        (optional, default: 31, the default value is configurable via the
+        ckan.activity_list_limit setting)
+    :type limit: int
+
+    :rtype: list of dictionaries
+
+    '''
+    # FIXME: Filter out activities whose subject or object the user is not
+    # authorized to read.
+    _check_access('package_show', context, data_dict)
+
+    model = context['model']
+
+    package_ref = data_dict.get('id')  # May be name or ID.
+    package = model.Package.get(package_ref)
+    if package is None:
+        raise logic.NotFound
+
+    offset = int(data_dict.get('offset', 0))
+    limit = int(
+        data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
+
+    activity_objects = model.activity.package_activity_list(package.id,
+            limit=limit, offset=offset)
+    return model_dictize.activity_list_dictize(activity_objects, context)
 
 def package_activity_list_html(context, data_dict):
     '''Return a package's activity stream as HTML.

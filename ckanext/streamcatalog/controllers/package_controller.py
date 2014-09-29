@@ -1,19 +1,24 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from py4j.protocol import Py4JJavaError
+
 from ckan.controllers.package import PackageController
 
 import ckan.model as model
 from ckan.logic import tuplize_dict, clean_dict, parse_params
+from ckan.lib.base import render
 from ckan.lib.navl.dictization_functions import unflatten
 from ckan.logic import get_action
+from ckan.logic import NotFound, NotAuthorized
 from ckan.common import _, request, c
 
-from py4j.protocol import Py4JJavaError
-
+from ckanext.streamcatalog.activity import package_activity_list_html
 from ckanext.streamcatalog.controllers.wso2esb_controller import getBrokerClient, getPackageIdFromName, getResourceUrlName
 
 
 class package(PackageController):
+
+    ''' WSO2 ESB functionality '''
 
     def publish(self, id):
         ''' Publishes (sends) a message to WSO2 ESB Topic related to the dataset. '''
@@ -86,3 +91,24 @@ class package(PackageController):
         brokerclient.unsubscribe(subscription_id)
 
         return super(package, self).resource_delete(id, resource_id)
+
+    ''' Overridde functions '''
+
+    def activity(self, id):
+        '''Render this package's public activity stream page.'''
+
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author, 'for_view': True,
+                   'auth_user_obj': c.userobj}
+        data_dict = {'id': id}
+        try:
+            c.pkg_dict = get_action('package_show')(context, data_dict)
+            c.pkg = context['package']
+            c.package_activity_stream = package_activity_list_html(context, {'id': c.pkg_dict['id']})
+            c.related_count = c.pkg.related_count
+        except NotFound:
+            abort(404, _('Datastream not found'))
+        except NotAuthorized:
+            abort(401, _('Unauthorized to read datastream %s') % id)
+
+        return render('package/activity.html')
