@@ -1,6 +1,11 @@
 import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 
+# activity.py - rewritten core functionality replaces dataset with datastream.
+#from ckanext.streamcatalog.activity import user_activity_list_html, package_activity_list_html, group_activity_list_html, \
+#                                           organization_activity_list_html, recently_changed_packages_activity_list_html
+from ckanext.streamcatalog.activity import dashboard_activity_stream
+
 ''' Helper functions that can be called from CKAN snippet. '''
 
 def getAllSubscriptions(package_id = None, user_id = None):
@@ -67,4 +72,12 @@ class StreamCatalogPlugin(p.SingletonPlugin):
         return {
                 'streamcatalog_getAllSubscriptions': getAllSubscriptions,
                 'streamcatalog_countSubscriptions': countSubscriptions,
+                # activity.py - rewritten core functionality replaces dataset with datastream.
+                #'streamcatalog_user_activity_list_html': user_activity_list_html,
+                #'streamcatalog_package_activity_list_html': package_activity_list_html,
+                #'streamcatalog_group_activity_list_html': group_activity_list_html,
+                #'streamcatalog_organization_activity_list_html': organization_activity_list_html,
+                #'streamcatalog_recently_changed_packages_activity_list_html': recently_changed_packages_activity_list_html,
+                #
+                'streamcatalog_dashboard_activity_stream': dashboard_activity_stream
             }
