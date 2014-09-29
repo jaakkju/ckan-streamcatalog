@@ -7,7 +7,7 @@ from ckan.lib.base import render
 from ckan.logic import NotFound, NotAuthorized
 from ckan.common import _, c
 
-from ckanext.streamcatalog.activity import group_activity_list_html
+from ckanext.streamcatalog.activity import group_activity_list_html, organization_activity_list_html
 
 
 class group(GroupController):
@@ -28,6 +28,9 @@ class group(GroupController):
 
         # Add the group's activity stream (already rendered to HTML) to the
         # template context for the group/read.html template to retrieve later.
-        c.group_activity_stream = group_activity_list_html(context, {'id': c.group_dict['id'], 'offset': offset})
+        if self.group_type != 'organization':
+            c.group_activity_stream = group_activity_list_html(context, {'id': c.group_dict['id'], 'offset': offset})
+        else:
+            c.group_activity_stream = organization_activity_list_html(context, {'id': c.group_dict['id'], 'offset': offset})
 
         return render(self._activity_template(c.group_dict['type']))

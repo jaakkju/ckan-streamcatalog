@@ -56,6 +56,7 @@ class StreamCatalogPlugin(p.SingletonPlugin):
 
         map.connect('/dataset/activity/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='activity')
         map.connect('/group/activity/{id}/{offset}', controller='ckanext.streamcatalog.controllers.group_controller:group', action='activity')
+        map.connect('/organization/activity/{id}', controller='ckanext.streamcatalog.controllers.organization_controller:organization', action='activity')
 
         return map
 

@@ -398,6 +398,33 @@ def group_activity_list_html(context, data_dict):
         }
     return activity_list_to_html(context, activity_stream, extra_vars)
 
+def organization_activity_list(context, data_dict):
+    '''Return a organization's activity stream.
+
+    :param id: the id or name of the organization
+    :type id: string
+
+    :rtype: list of dictionaries
+
+    '''
+    # FIXME: Filter out activities whose subject or object the user is not
+    # authorized to read.
+    _check_access('organization_show', context, data_dict)
+
+    model = context['model']
+    org_id = data_dict.get('id')
+    offset = data_dict.get('offset', 0)
+    limit = int(
+        data_dict.get('limit', config.get('ckan.activity_list_limit', 31)))
+
+    # Convert org_id (could be id or name) into id.
+    org_show = logic.get_action('organization_show')
+    org_id = org_show(context, {'id': org_id})['id']
+
+    activity_objects = model.activity.group_activity_list(org_id,
+            limit=limit, offset=offset)
+    return model_dictize.activity_list_dictize(activity_objects, context)
+
 def organization_activity_list_html(context, data_dict):
     '''Return a organization's activity stream as HTML.
 
