@@ -48,7 +48,7 @@ def activity_stream_string_changed_package_extra(context, activity):
     return _("{actor} changed the extra {extra} of the datastream {dataset}")
 
 def activity_stream_string_changed_resource(context, activity):
-    return _("{actor} updated the resource {resource} in the datastream {dataset}")
+    return _("{actor} updated the subscription {resource} in the datastream {dataset}")
 
 from ckan.lib.activity_streams import activity_stream_string_changed_user
 
@@ -68,7 +68,7 @@ def activity_stream_string_deleted_package_extra(context, activity):
     return _("{actor} deleted the extra {extra} from the datastream {dataset}")
 
 def activity_stream_string_deleted_resource(context, activity):
-    return _("{actor} deleted the resource {resource} from the datastream "
+    return _("{actor} deleted the subscription {resource} from the datastream "
              "{dataset}")
 
 from ckan.lib.activity_streams import activity_stream_string_new_group, activity_stream_string_new_organization
@@ -80,7 +80,7 @@ def activity_stream_string_new_package_extra(context, activity):
     return _("{actor} added the extra {extra} to the datastream {dataset}")
 
 def activity_stream_string_new_resource(context, activity):
-    return _("{actor} added the resource {resource} to the datastream {dataset}")
+    return _("{actor} added the subscription {resource} to the datastream {dataset}")
 
 from ckan.lib.activity_streams import activity_stream_string_new_user
 
