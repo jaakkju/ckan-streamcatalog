@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-streamcatalog 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-09-30 06:54+0000\n"
+"POT-Creation-Date: 2014-09-30 08:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3833,7 +3833,7 @@ msgid "Next: Additional Info"
 msgstr ""
 
 #: ../ckan/ckan/templates/package/snippets/resource_form.html:75
-#: ckanext/streamcatalog/templates/package/read.html:24
+#: ckanext/streamcatalog/templates/package/read.html:26
 msgid "Add"
 msgstr ""
 
@@ -4756,7 +4756,7 @@ msgstr ""
 #: ../ckan/ckan/templates_legacy/js_strings.html:16
 #: ../ckan/ckan/templates_legacy/group/new_group_form.html:28
 #: ../ckan/ckan/templates_legacy/package/new_package_form.html:49
-#: ckanext/streamcatalog/templates/package/read.html:22
+#: ckanext/streamcatalog/templates/package/read.html:24
 msgid "Url"
 msgstr ""
 
@@ -6550,6 +6550,8 @@ msgid "Unauthorized to read datastream %s"
 msgstr ""
 
 #: ckanext/streamcatalog/templates/group/snippets/info.html:22
+#: ckanext/streamcatalog/templates/package/search.html:3
+#: ckanext/streamcatalog/templates/package/search.html:6
 #: ckanext/streamcatalog/templates/snippets/organization.html:46
 msgid "Datastreams"
 msgstr ""
@@ -6558,16 +6560,32 @@ msgstr ""
 msgid "Subscriptions"
 msgstr ""
 
-#: ckanext/streamcatalog/templates/package/read.html:22
+#: ckanext/streamcatalog/templates/package/read.html:16
+msgid "{number} active Subscription for this Datastream."
+msgid_plural "{number} active Subscriptions for this Datastream."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/streamcatalog/templates/package/read.html:24
 msgid "eg. http://example.com/gold-prices-jan-2011.json"
 msgstr ""
 
-#: ckanext/streamcatalog/templates/package/read.html:39
+#: ckanext/streamcatalog/templates/package/read.html:37
+msgid "{number} deleted Subscription for this Datastream."
+msgid_plural "{number} deleted Subscriptions for this Datastream."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/streamcatalog/templates/package/read.html:43
 msgid "Message"
 msgstr ""
 
-#: ckanext/streamcatalog/templates/package/read.html:40
+#: ckanext/streamcatalog/templates/package/read.html:44
 msgid "Send"
+msgstr ""
+
+#: ckanext/streamcatalog/templates/package/search.html:12
+msgid "Add Datastream"
 msgstr ""
 
 #: ckanext/streamcatalog/templates/package/snippets/stages.html:25

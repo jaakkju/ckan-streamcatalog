@@ -12,7 +12,9 @@
   {% if susbcriptions and c.userobj %}
     {% snippet "package/snippets/subscriptions_list.html", pkg=pkg, susbcriptions=susbcriptions, state='active' %}
   {% endif %}
-  <div>{{ h.streamcatalog_countSubscriptions(susbcriptions, 'active') }} active Subscription(s) for this Datastream.</div>
+  {% set active_count = h.streamcatalog_countSubscriptions(susbcriptions, 'active') -%}
+  {% set active_text = ungettext('{number} active Subscription for this Datastream.', '{number} active Subscriptions for this Datastream.', active_count) -%}
+  <div>{{ _(active_text).format(number=h.localised_number(active_count)) }}</div>
 
   {% if h.check_access('resource_create') -%}
     <fieldset style="border: 1px solid #DDD; max-height: 60px;">
@@ -31,7 +33,9 @@
     {% snippet "package/snippets/subscriptions_list.html", pkg=pkg, susbcriptions=susbcriptions, state='deleted' %}
   {% endif %}
   {% if c.userobj -%}
-    <div>{{ h.streamcatalog_countSubscriptions(susbcriptions, 'deleted') }} deleted Subscription(s) for this Datastream.</div>
+    {% set deleted_count = h.streamcatalog_countSubscriptions(susbcriptions, 'deleted') -%}
+    {% set deleted_text = ungettext('{number} deleted Subscription for this Datastream.', '{number} deleted Subscriptions for this Datastream.', deleted_count) -%}
+    <div>{{ _(deleted_text).format(number=h.localised_number(deleted_count)) }}</div>
   {% endif -%}
 
   {% if c.userobj.sysadmin -%}
