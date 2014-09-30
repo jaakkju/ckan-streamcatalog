@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-streamcatalog 0.0.1\n"
 "Report-Msgid-Bugs-To: janne.mikkonen@hiq.fi\n"
-"POT-Creation-Date: 2014-09-30 08:21+0000\n"
+"POT-Creation-Date: 2014-09-30 10:03+0000\n"
 "PO-Revision-Date: 2014-09-30 07:00+0000\n"
 "Last-Translator: Janne Mikkonen <janne.mikkonen@hiq.fi>\n"
 "Language-Team: fi <LL@li.org>\n"
@@ -71,6 +71,9 @@ msgstr "Sivun logo"
 #: ../ckan/ckan/templates_legacy/home/about.html:9
 #: ../ckan/ckan/templates_legacy/user/edit_user_form.html:39
 #: ../ckan/ckan/templates_legacy/user/read.html:28
+#: ckanext/streamcatalog/templates/header.html:11
+#: ckanext/streamcatalog/templates/group/read_base.html:6
+#: ckanext/streamcatalog/templates/organization/read_base.html:6
 msgid "About"
 msgstr "Tietoja"
 
@@ -275,6 +278,8 @@ msgstr "Ryhmän lukeminen ei sallittu %s"
 #: ../ckan/ckan/templates/organization/read_base.html:3
 #: ../ckan/ckan/templates/organization/read_base.html:6
 #: ../ckan/ckan/templates/package/base.html:14
+#: ckanext/streamcatalog/templates/header.html:9
+#: ckanext/streamcatalog/templates/package/base.html:14
 msgid "Organizations"
 msgstr "Organisaatiot"
 
@@ -300,6 +305,8 @@ msgstr "Organisaatiot"
 #: ../ckan/ckan/templates_legacy/package/read.html:49
 #: ../ckan/ckan/templates_legacy/package/search.html:26
 #: ../ckan/ckan/templates_legacy/revision/read.html:64
+#: ckanext/streamcatalog/templates/header.html:10
+#: ckanext/streamcatalog/templates/package/read_base.html:5
 msgid "Groups"
 msgstr "Ryhmät"
 
@@ -1394,6 +1401,7 @@ msgstr "Päivämäärän muoto väärä"
 #: ../ckan/ckan/templates/package/read_base.html:27
 #: ../ckan/ckan/templates/package/related_list.html:5
 #: ../ckan/ckan/templates/snippets/related.html:2
+#: ckanext/streamcatalog/templates/package/read_base.html:7
 msgid "Related"
 msgstr "Liittyvä"
 
@@ -2328,6 +2336,7 @@ msgstr[1] "Työpöydällä (%(num)d uutta kohdetta)"
 
 #: ../ckan/ckan/templates/header.html:33
 #: ../ckan/ckan/templates/user/dashboard.html:16
+#: ckanext/streamcatalog/templates/user/dashboard.html:10
 msgid "Edit settings"
 msgstr "Muokkaa asetuksia"
 
@@ -2668,6 +2677,9 @@ msgstr "Valitse"
 #: ../ckan/ckan/templates/user/activity_stream.html:3
 #: ../ckan/ckan/templates/user/activity_stream.html:6
 #: ../ckan/ckan/templates/user/read_base.html:20
+#: ckanext/streamcatalog/templates/group/read_base.html:5
+#: ckanext/streamcatalog/templates/organization/read_base.html:5
+#: ckanext/streamcatalog/templates/package/read_base.html:6
 msgid "Activity Stream"
 msgstr "Aktiivisuusvirta"
 
@@ -2922,6 +2934,7 @@ msgstr "Luo uusi ryhmä"
 #: ../ckan/ckan/templates/organization/read.html:19
 #: ../ckan/ckan/templates/package/search.html:29
 #: ../ckan/ckan/templates/snippets/sort_by.html:14
+#: ckanext/streamcatalog/templates/group/read.html:12
 msgid "Relevance"
 msgstr "Relevanssi"
 
@@ -2932,6 +2945,8 @@ msgstr "Relevanssi"
 #: ../ckan/ckan/templates/snippets/search_form.html:4
 #: ../ckan/ckan/templates/snippets/simple_search.html:10
 #: ../ckan/ckan/templates/snippets/sort_by.html:15
+#: ckanext/streamcatalog/templates/group/read.html:13
+#: ckanext/streamcatalog/templates/snippets/search_form.html:6
 msgid "Name Ascending"
 msgstr "Nimen mukaan nousevasti"
 
@@ -2942,6 +2957,8 @@ msgstr "Nimen mukaan nousevasti"
 #: ../ckan/ckan/templates/snippets/search_form.html:4
 #: ../ckan/ckan/templates/snippets/simple_search.html:10
 #: ../ckan/ckan/templates/snippets/sort_by.html:16
+#: ckanext/streamcatalog/templates/group/read.html:14
+#: ckanext/streamcatalog/templates/snippets/search_form.html:6
 msgid "Name Descending"
 msgstr "Nimen mukaan laskevasti"
 
@@ -2952,6 +2969,7 @@ msgstr "Nimen mukaan laskevasti"
 #: ../ckan/ckan/templates/package/snippets/resource_form.html:47
 #: ../ckan/ckan/templates/snippets/sort_by.html:17
 #: ../ckan/ckan/templates_legacy/js_strings.html:16
+#: ckanext/streamcatalog/templates/group/read.html:15
 msgid "Last Modified"
 msgstr "Viimeksi muokattu"
 
@@ -2961,6 +2979,7 @@ msgstr "Viimeksi muokattu"
 #: ../ckan/ckan/templates/snippets/package_item.html:40
 #: ../ckan/ckan/templates/snippets/popular.html:3
 #: ../ckan/ckan/templates/snippets/sort_by.html:19
+#: ckanext/streamcatalog/templates/group/read.html:16
 msgid "Popular"
 msgstr "Suositut"
 
@@ -4333,6 +4352,7 @@ msgstr "Lisää osio"
 
 #: ../ckan/ckan/templates/snippets/search_form.html:15
 #: ../ckan/ckan/templates_legacy/related/add-related.html:46
+#: ckanext/streamcatalog/templates/snippets/search_form.html:17
 msgid "Submit"
 msgstr "Lähetä"
 
@@ -4343,10 +4363,12 @@ msgid "Order by"
 msgstr "Lajittelu"
 
 #: ../ckan/ckan/templates/snippets/search_form.html:72
+#: ckanext/streamcatalog/templates/snippets/search_form.html:33
 msgid " <p class=\"extra\">Please try another search.</p> "
 msgstr " <p class=\"extra\">Kokeile toisenlaista hakua.</p> "
 
 #: ../ckan/ckan/templates/snippets/search_form.html:78
+#: ckanext/streamcatalog/templates/snippets/search_form.html:39
 msgid ""
 " <p><strong>There was an error while searching.</strong> Please try "
 "again.</p> "
@@ -4458,6 +4480,8 @@ msgstr "Yhteenveto"
 
 #: ../ckan/ckan/templates/user/dashboard.html:19
 #: ../ckan/ckan/templates/user/dashboard.html:37
+#: ckanext/streamcatalog/templates/user/dashboard.html:13
+#: ckanext/streamcatalog/templates/user/dashboard.html:31
 msgid "News feed"
 msgstr "Uutisvirta"
 
@@ -4468,15 +4492,18 @@ msgstr "Minun tietoaineistot"
 
 #: ../ckan/ckan/templates/user/dashboard.html:21
 #: ../ckan/ckan/templates/user/dashboard_organizations.html:12
+#: ckanext/streamcatalog/templates/user/dashboard.html:15
 msgid "My Organizations"
 msgstr "Minun organisaatiot"
 
 #: ../ckan/ckan/templates/user/dashboard.html:22
 #: ../ckan/ckan/templates/user/dashboard_groups.html:12
+#: ckanext/streamcatalog/templates/user/dashboard.html:16
 msgid "My Groups"
 msgstr "Minun ryhmät"
 
 #: ../ckan/ckan/templates/user/dashboard.html:39
+#: ckanext/streamcatalog/templates/user/dashboard.html:33
 msgid "Activity from items that I'm following"
 msgstr "Seuraamieni osioiden toiminta"
 
@@ -4489,6 +4516,7 @@ msgstr "Et ole vielä luonut yhtään tietoaineistoa"
 #: ../ckan/ckan/templates/user/dashboard_groups.html:22
 #: ../ckan/ckan/templates/user/dashboard_organizations.html:22
 #: ../ckan/ckan/templates/user/read.html:16
+#: ckanext/streamcatalog/templates/user/dashboard_datasets.html:19
 msgid "Create one now?"
 msgstr "Luo uusi nyt?"
 
@@ -6823,6 +6851,7 @@ msgid "Error While Subscribing: Cannot connect to WSO2 ESB."
 msgstr "Virhe Tilauksen luonnissa: Ei saatu yhteyttä WSO2 ESB:hen."
 
 #: ckanext/streamcatalog/controllers/package_controller.py:69
+#: ckanext/streamcatalog/templates/admin/base.html:5
 msgid "WSO2 ESB"
 msgstr "WSO2 ESB"
 
@@ -6839,12 +6868,36 @@ msgstr "Tietovirtaa ei löytynyt"
 msgid "Unauthorized to read datastream %s"
 msgstr "Ei oikeutta lukea tietovirtaa %s"
 
+#: ckanext/streamcatalog/templates/header.html:8
+#: ckanext/streamcatalog/templates/group/read_base.html:4
 #: ckanext/streamcatalog/templates/group/snippets/info.html:22
+#: ckanext/streamcatalog/templates/organization/read_base.html:4
+#: ckanext/streamcatalog/templates/package/base.html:7
+#: ckanext/streamcatalog/templates/package/base.html:17
+#: ckanext/streamcatalog/templates/package/base.html:21
 #: ckanext/streamcatalog/templates/package/search.html:3
 #: ckanext/streamcatalog/templates/package/search.html:6
 #: ckanext/streamcatalog/templates/snippets/organization.html:46
 msgid "Datastreams"
 msgstr "Tietovirrat"
+
+#: ckanext/streamcatalog/templates/group/read.html:18
+#: ckanext/streamcatalog/templates/snippets/search_form.html:5
+msgid "Search datastreams..."
+msgstr "Etsi tietovirroista..."
+
+#: ckanext/streamcatalog/templates/organization/read.html:5
+#: ckanext/streamcatalog/templates/package/search.html:12
+#: ckanext/streamcatalog/templates/user/dashboard_datasets.html:7
+msgid "Add Datastream"
+msgstr "Lisää Tietovirta"
+
+#: ckanext/streamcatalog/templates/package/base.html:22
+#: ckanext/streamcatalog/templates/package/new.html:3
+#: ckanext/streamcatalog/templates/package/snippets/stages.html:25
+#: ckanext/streamcatalog/templates/package/snippets/stages.html:27
+msgid "Create Datastream"
+msgstr "Luo Tietovirta"
 
 #: ckanext/streamcatalog/templates/package/read.html:9
 msgid "Subscriptions"
@@ -6874,14 +6927,9 @@ msgstr "Viesti"
 msgid "Send"
 msgstr "Lähetä"
 
-#: ckanext/streamcatalog/templates/package/search.html:12
-msgid "Add Datastream"
-msgstr "Lisää Tietovirta"
-
-#: ckanext/streamcatalog/templates/package/snippets/stages.html:25
-#: ckanext/streamcatalog/templates/package/snippets/stages.html:27
-msgid "Create Datastream"
-msgstr "Luo Tietovirta"
+#: ckanext/streamcatalog/templates/package/read_base.html:4
+msgid "Datastream"
+msgstr "Tietovirta"
 
 #: ckanext/streamcatalog/templates/package/snippets/stages.html:32
 #: ckanext/streamcatalog/templates/package/snippets/stages.html:36
@@ -6894,11 +6942,11 @@ msgstr "Lisää Tilaus"
 
 #: ckanext/streamcatalog/templates/package/snippets/subscriptions_list.html:14
 msgid "Active Subscriptions"
-msgstr "Aktiivinen Tilaus"
+msgstr "Aktiiviset Tilaukset"
 
 #: ckanext/streamcatalog/templates/package/snippets/subscriptions_list.html:14
 msgid "Deleted Subscriptions"
-msgstr "Poistettu Tilaus"
+msgstr "Poistetut Tilaukset"
 
 #: ckanext/streamcatalog/templates/snippets/search_result_text.html:15
 msgid "{number} datastream found for \"{query}\""
@@ -6919,4 +6967,13 @@ msgstr[1] "Löytyi {number} tietovirtaa"
 #: ckanext/streamcatalog/templates/snippets/search_result_text.html:18
 msgid "No datastreams found"
 msgstr "Tietovirtoja ei löytynyt"
+
+#: ckanext/streamcatalog/templates/user/dashboard.html:14
+#: ckanext/streamcatalog/templates/user/dashboard_datasets.html:12
+msgid "My Datastreams"
+msgstr "Minun Tietovirtani"
+
+#: ckanext/streamcatalog/templates/user/dashboard_datasets.html:17
+msgid "You haven't created any datastreams."
+msgstr "Et ole luonut yhtään tietovirtaa."
 
