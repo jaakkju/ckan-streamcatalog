@@ -3,6 +3,8 @@ import datetime
 
 from pylons import config
 from webhelpers.html import literal
+from webhelpers.html.tags import *
+from routes import url_for
 
 import ckan.lib.helpers as h
 import ckan.lib.base as base
@@ -26,8 +28,16 @@ Here we simply replace all occurrances of "dataset" with "datastream".
 # Salvage what we do not need to rewrite.
 from ckan.lib.activity_streams import get_snippet_actor, get_snippet_user, get_snippet_dataset, \
                                       get_snippet_tag, get_snippet_group, get_snippet_organization, \
-                                      get_snippet_extra, get_snippet_resource, get_snippet_related_item, \
-                                      get_snippet_related_type
+                                      get_snippet_extra, get_snippet_related_item, get_snippet_related_type
+
+def get_snippet_resource(activity, detail):
+    text = str(detail['data']['resource']['url'])
+    url = url_for(controller='package',
+                  action='resource_read',
+                  id=activity['data']['package']['id'],
+                  resource_id=detail['data']['resource']['id'])
+    return link_to(text, url)
+
 
 # activity_stream_string_*() functions return translatable string
 # representations of activity types, the strings contain placeholders like
@@ -48,7 +58,7 @@ def activity_stream_string_changed_package_extra(context, activity):
     return _("{actor} changed the extra {extra} of the datastream {dataset}")
 
 def activity_stream_string_changed_resource(context, activity):
-    return _("{actor} updated the subscription {resource} in the datastream {dataset}")
+    return _("{actor} updated a subscription to {resource} in the datastream {dataset}")
 
 from ckan.lib.activity_streams import activity_stream_string_changed_user
 
@@ -80,7 +90,7 @@ def activity_stream_string_new_package_extra(context, activity):
     return _("{actor} added the extra {extra} to the datastream {dataset}")
 
 def activity_stream_string_new_resource(context, activity):
-    return _("{actor} added the subscription {resource} to the datastream {dataset}")
+    return _("{actor} added a subscription to {resource} to the datastream {dataset}")
 
 from ckan.lib.activity_streams import activity_stream_string_new_user
 
