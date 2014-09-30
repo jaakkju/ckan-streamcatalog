@@ -4,9 +4,10 @@ from py4j.protocol import Py4JJavaError
 
 from ckan.controllers.package import PackageController
 
+import ckan.new_authz as new_authz
 import ckan.model as model
 from ckan.logic import tuplize_dict, clean_dict, parse_params
-from ckan.lib.base import render
+from ckan.lib.base import render, abort
 from ckan.lib.navl.dictization_functions import unflatten
 from ckan.logic import get_action
 from ckan.logic import NotFound, NotAuthorized
@@ -96,6 +97,10 @@ class package(PackageController):
 
     def activity(self, id):
         '''Render this package's public activity stream page.'''
+
+        # Only allow (logged in) admins to view activity streams.
+        if not c.user or not new_authz.is_sysadmin(c.user):
+            abort(401, _('Unauthorized to read activity streams for datastreams'))
 
         context = {'model': model, 'session': model.Session,
                    'user': c.user or c.author, 'for_view': True,

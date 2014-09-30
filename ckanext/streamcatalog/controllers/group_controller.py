@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 from ckan.controllers.group import GroupController
 
+import ckan.new_authz as new_authz
 import ckan.model as model
-from ckan.lib.base import render
+from ckan.lib.base import render, abort
 from ckan.logic import NotFound, NotAuthorized
 from ckan.common import _, c
 
@@ -16,6 +17,10 @@ class group(GroupController):
 
     def activity(self, id, offset=0):
         '''Render this group's public activity stream page.'''
+
+        # Only allow (logged in) admins to view activity streams.
+        if not c.user or not new_authz.is_sysadmin(c.user):
+            abort(401, _('Unauthorized to read activity streams for groups'))
 
         context = {'model': model, 'session': model.Session,
                    'user': c.user or c.author, 'for_view': True}
