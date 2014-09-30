@@ -13,7 +13,7 @@ from ckanext.streamcatalog.activity import group_activity_list_html, organizatio
 
 class group(GroupController):
 
-    ''' Overridde functions '''
+    ''' Override functions '''
 
     def activity(self, id, offset=0):
         '''Render this group's public activity stream page.'''

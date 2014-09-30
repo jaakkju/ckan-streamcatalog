@@ -93,7 +93,7 @@ class package(PackageController):
 
         return super(package, self).resource_delete(id, resource_id)
 
-    ''' Overridde functions '''
+    ''' Override functions '''
 
     def activity(self, id):
         '''Render this package's public activity stream page.'''
