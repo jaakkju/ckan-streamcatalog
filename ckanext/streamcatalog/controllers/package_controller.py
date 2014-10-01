@@ -16,7 +16,7 @@ from ckan.common import _, request, c
 import ckan.lib.helpers as h
 
 from ckanext.streamcatalog.activity import package_activity_list_html
-from ckanext.streamcatalog.controllers.wso2esb_controller import getBrokerClient, getPackageIdFromName, getResourceUrlName
+from ckanext.streamcatalog.controllers.wso2esb_controller import getBrokerClient, getResourceUrlFromName, getTopicFromPackageData
 
 log = logging.getLogger(__name__)
 
@@ -31,9 +31,10 @@ class package(PackageController):
         data = clean_dict(unflatten(tuplize_dict(parse_params(request.POST))))
         if 'message' in data and isinstance(data['message'], basestring):
             if c.userobj.sysadmin:
-                package_id = getPackageIdFromName(id)
+                package_data = get_action('package_show')({'model': model, 'session': model.Session, 'user': c.user or c.author, 'auth_user_obj': c.userobj}, {'id': id})
+                topic = getTopicFromPackageData(package_data)
                 brokerclient = getBrokerClient()
-                if brokerclient.publish(package_id, data['message']):
+                if brokerclient.publish(topic, data['message']):
                     h.flash_notice(_('The message was sent.'))
                 else:
                     h.flash_error(_('Error sending the message.'))
@@ -52,11 +53,12 @@ class package(PackageController):
             postdata = data or clean_dict(unflatten(tuplize_dict(parse_params(request.POST))))
             
             if 'save' in postdata and 'url' in postdata:
-                package_id = getPackageIdFromName(id)
+                package_data = get_action('package_show')({'model': model, 'session': model.Session, 'user': c.user or c.author, 'auth_user_obj': c.userobj}, {'id': id})
+                topic = getTopicFromPackageData(package_data)
                 # Add a new subscription for the topic named after the dataset, pointing to the URL given.
                 brokerclient = getBrokerClient()
                 try:
-                    result = brokerclient.subscribe(package_id, postdata['url'])
+                    result = brokerclient.subscribe(topic, postdata['url'])
                 except Py4JJavaError, e:
                     # Errors are propagated to the CKAN controller below to prevent new resource creation.
                     error_message = str(e)
@@ -81,14 +83,16 @@ class package(PackageController):
 
         subscription_id = None
         brokerclient = getBrokerClient()
-        package_id = getPackageIdFromName(id)
-        resource_url = getResourceUrlName(resource_id)
+        package_data = get_action('package_show')({'model': model, 'session': model.Session, 'user': c.user or c.author, 'auth_user_obj': c.userobj}, {'id': id})
+        topic = getTopicFromPackageData(package_data)
+        resource_url = getResourceUrlFromName(resource_id)
+        
         # Cycle through subscriptions until the right one is found, then select its id.
         subscriptions = brokerclient.getAllSubscriptions()
         subscriptions = json.loads(subscriptions)
         for subscription in subscriptions:
             # Note here that CKAN appends http:// prefix into URLs if it's not present upon resource creation, causing mismatch here - so we must take that to account.
-            if subscription['localTopic'] == '/' + package_id and subscription['localEventSinkAddress'] == resource_url or "http://" + subscription['localEventSinkAddress'] == resource_url:
+            if subscription['localTopic'] == '/' + topic and subscription['localEventSinkAddress'] == resource_url or "http://" + subscription['localEventSinkAddress'] == resource_url:
                 subscription_id = subscription['localSubscriptionId']
 
         # Since we now have access to the subscription id, simply use it to unsubscribe.

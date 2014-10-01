@@ -23,16 +23,7 @@ def getBrokerClient():
 
     return gateway.entry_point
 
-def getPackageIdFromName(package_name):
-    ''' Turn id (dataset's slug) to package_id (its actual id). '''
-    
-    package_data = get_action('package_show')({'model': model, 'session': model.Session, 'user': c.user or c.author, 'auth_user_obj': c.userobj}, {'id': package_name})
-    if 'id' in package_data:
-        return package_data['id']
-    else:
-        return None
-
-def getResourceUrlName(resource_name):
+def getResourceUrlFromName(resource_name):
     ''' Use resource id to get its url field value. '''
 
     resource_data = get_action('resource_show')({'model': model, 'session': model.Session, 'user': c.user or c.author, 'auth_user_obj': c.userobj}, {'id': resource_name})
@@ -40,6 +31,19 @@ def getResourceUrlName(resource_name):
         return resource_data['url']
     else:
         return None
+
+def getTopicFromPackageData(package_data):
+    ''' Deduct WSO2 ESB Topic name from package data - if the extra field topic is defined, use that, otherwise use datastream's id. '''
+
+    topic = None
+    for extra in package_data['extras']:
+        if extra['key'] == 'topic':
+            topic = extra['value']
+
+    if topic and len(topic) > 0:
+        return topic
+    else:
+        return package_data['id']
 
 ''' WSO2 ESB controller '''
 
