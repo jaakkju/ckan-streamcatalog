@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import logging
 from py4j.protocol import Py4JJavaError
 
 from ckan.controllers.package import PackageController
@@ -12,9 +13,12 @@ from ckan.lib.navl.dictization_functions import unflatten
 from ckan.logic import get_action
 from ckan.logic import NotFound, NotAuthorized
 from ckan.common import _, request, c
+import ckan.lib.helpers as h
 
 from ckanext.streamcatalog.activity import package_activity_list_html
 from ckanext.streamcatalog.controllers.wso2esb_controller import getBrokerClient, getPackageIdFromName, getResourceUrlName
+
+log = logging.getLogger(__name__)
 
 
 class package(PackageController):
@@ -88,8 +92,14 @@ class package(PackageController):
                 subscription_id = subscription['localSubscriptionId']
 
         # Since we now have access to the subscription id, simply use it to unsubscribe.
-        # @TODO Try-catch?
-        brokerclient.unsubscribe(subscription_id)
+        try:
+            brokerclient.unsubscribe(subscription_id)
+        except Py4JJavaError, e:
+            error_message = str(e)
+            if 'org.apache.axis2.AxisFault: java.lang.NullPointerException' in error_message:
+                h.flash_error(_('Warning: removed subscription was not found on the WSO2 ESB.'))
+            else:
+                raise e
 
         return super(package, self).resource_delete(id, resource_id)
 

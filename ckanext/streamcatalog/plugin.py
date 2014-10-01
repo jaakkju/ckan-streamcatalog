@@ -53,7 +53,10 @@ class StreamCatalogPlugin(p.SingletonPlugin):
         map.connect('/dataset/new_resource/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='new_resource')
         map.connect('/dataset/{id}/resource_delete/{resource_id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='resource_delete')
         map.connect('/dataset/{id}/publish', controller='ckanext.streamcatalog.controllers.package_controller:package', action='publish')
-
+        # WSO2 ESB functionality.
+        map.connect('/wso2esb/topicsubscription_delete/{subscription_id}', controller='ckanext.streamcatalog.controllers.wso2esb_controller:WSO2ESB', action='topicsubscription_delete')
+        map.connect('/wso2esb/topicsubscription_create', controller='ckanext.streamcatalog.controllers.wso2esb_controller:WSO2ESB', action='topicsubscription_create')
+        # Activity stream rewrites.
         map.connect('/dataset/activity/{id}', controller='ckanext.streamcatalog.controllers.package_controller:package', action='activity')
         map.connect('/group/activity/{id}/{offset}', controller='ckanext.streamcatalog.controllers.group_controller:group', action='activity')
         map.connect('/organization/activity/{id}', controller='ckanext.streamcatalog.controllers.organization_controller:organization', action='activity')

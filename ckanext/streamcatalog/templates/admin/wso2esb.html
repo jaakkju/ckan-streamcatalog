@@ -1,12 +1,42 @@
 {% extends "admin/base.html" %}
 
+{% import 'macros/form.html' as form -%}
+
 {% block primary_content_inner %}
-  {% if c.subscriptions %}
+
+  <fieldset>
+  	<h1>{{ _('WARNING!') }}</h1>
+  	<p>{{ _('All the functions provided in this page affect WSO2 ESB directly without involving CKAN in any way. By using the functions provided here, you are fully aware of the consequences of your actions and you are within your rights utilize them.') }}</p>
+  </fieldset>
+  
+  {%- if c.subscriptions %}
     <table class="table table-hover">
-      <tr><th>Topic</th><th>Topic ID</th><th>Receiver URL</th></tr>
+      <tr><th>Topic</th><th>Subscription URL</th><th>Subscription ID</th><th></th></tr>
       {% for subscription in c.subscriptions %}
-        <tr><td>{{ subscription.localTopic }}</td><td>{{ subscription.localSubscriptionId }}</td><td>{{ subscription.localEventSinkAddress }}</td></tr>
+        <tr>
+          <td>{{ subscription.localTopic }}</td>
+          <td>{{ subscription.localEventSinkAddress }}</td>
+          <td>{{ subscription.localSubscriptionId }}</td>
+          <td>
+            <form method="post" action="/wso2esb/topicsubscription_delete/{{ subscription.localSubscriptionId }}" data-module="basic-form resource-form">
+              <button class="btn btn-primary" name="submit" value="" type="submit" style="">{{ _('Delete') }}</button>
+            </form>
+          </td>
+        </tr>
+        {# <tr><td colspan="4">{{ subscription }}</tr> #}
       {% endfor %}
     </table>
-  {% endif %}
+  {% else %}
+    {{ _('No subscriptions were found or an error occurred when polling WSO2 ESB.') }}
+  {% endif -%}
+
+  <h3>{{ _('Add Subscription') }}</h3>
+
+  <form class="dataset-form dataset-resource-form form-horizontal" method="post" action="/wso2esb/topicsubscription_create" data-module="basic-form resource-form">
+  	{{ form.input('topic', id='field-topic', label=_('Topic*'), placeholder='', value='', error={}, classes=['control-full', 'control-large']) }}
+  	{{ form.input('url', id='field-url', label=_('Url'), placeholder='', value='', error={}, classes=['control-full', 'control-large']) }}
+    <button class="btn btn-primary" name="submit" value="" type="submit" style="">{{ _('Add') }}</button>
+  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* {{ _('Note: extra "/" is added automatically in front of the Topic') }}
+  </form>
+
 {% endblock %}
