@@ -3,6 +3,17 @@
 {% import 'macros/form.html' as form -%}
 
 {% block package_resources %}
- 
+  
+  {% if h.check_access('resource_create') -%}
+    <fieldset style="border: 1px solid #DDD; max-height: 60px;">
+      {% set action = form_action or h.url_for(controller='package', action='new_resource', id=pkg.name) -%}
+      <form class="dataset-form dataset-resource-form form-horizontal" method="post" action="{{ action }}" data-module="basic-form resource-form" style="padding: 10px 10px;">
+        <input name="id" value="" type="hidden"/>
+        {{ form.input('url', id='field-url', label=_('Url'), placeholder=_('eg. http://example.com/gold-prices-jan-2011.json'), value='', error={}, classes=['control-full', 'control-large']) }}
+        <div style="clear: both"></div>
+        <button class="btn btn-primary" name="save" value="go-dataset-complete" type="submit" style="margin-top: -102px;">{{ _('Add') }}</button>
+      </form>
+    </fieldset>
+  {% endif -%}
 
 {% endblock %}
