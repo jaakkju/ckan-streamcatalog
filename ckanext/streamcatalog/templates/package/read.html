@@ -25,4 +25,20 @@
     </fieldset>
   {% endif -%}
 
+  {% if susbcriptions and c.userobj.sysadmin %}
+    {% snippet "package/snippets/subscriptions_list.html", pkg=pkg, susbcriptions=susbcriptions, state='deleted' %}
+  {% endif %}
+  {% if c.userobj -%}
+    {% set deleted_count = h.streamcatalog_countSubscriptions(susbcriptions, 'deleted') -%}
+    {% set deleted_text = ungettext('{number} deleted Subscription for this Datastream.', '{number} deleted Subscriptions for this Datastream.', deleted_count) -%}
+    <div>{{ _(deleted_text).format(number=h.localised_number(deleted_count)) }}</div>
+  {% endif -%}
+
+  {% if c.userobj.sysadmin -%}
+    <form class="dataset-form dataset-resource-form form-horizontal" method="post" action="/dataset/{{ pkg.name }}/publish" data-module="basic-form resource-form">
+      {{ form.textarea('message', id='field-message', label=_('Message'), placeholder='', value='', error={}, classes=['control-full', 'control-large']) }}
+      <button class="btn btn-primary" name="save" value="go-dataset-complete" type="submit" style="">{{ _('Send') }}</button>
+    </form>
+  {% endif -%}
+
 {% endblock %}
