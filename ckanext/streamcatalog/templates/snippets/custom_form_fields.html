@@ -15,44 +15,112 @@ Example:
 {% if extras|length == 0 %}{% set extras = {'dummy': 'dummy'} %}{% endif %}
 
 {% set category_options = [
-        _('Category 1'),
-        _('Category 2'),
-        _('Category 3'),
-        _('Category 4'),
-        _('Category 5')
+        _('Atmospheric Conditions'),
+        _('Environmental Monitoring'),
+        _('Hydrography'),
+        _('Meteorology'),
+        _('Sea Areas'),
+	_('Agricultural Facilities'),
+	_('Elevation'),
+	_('Energy Resources'),
+	_('Land Cover'),
+	_('Species Distribution'),
+	_('Geology'),
+	_('Soil'),
+	_('Orthoimagery'),
+	_('Land Use')
+] -%}
+
+{% set format_options = [
+        _('Format 1'),
+        _('Format 2'),
+        _('Format 3')
+] -%}
+
+{% set update_frequency_of_resource_options = [
+        _('Once in Five Minutes'),
+        _('Hourly'),
+        _('Daily'),
+	_('Weekly'),
+	_('Fortnightly'),
+	_('Monthly'),
+	_('Quarterly'),
+	_('Biannually'),
+	_('Annually'),
+	_('Other Frequency'),
+	_('Irregular'),
+	_('Unknown'),
+	_('Not Planned / No Updating')
+] -%}
+
+{% set yesno_options = [
+        _('Yes'),
+        _('No')
+] -%}
+
+{% set temporal_extent_type_options = [
+        _('Time Series'),
+        _('Individual Time Stamp')
+] -%}
+
+{% set language_options = [
+        _('English'),
+        _('Finnish'),
+	_('Swedish')
+] -%}
+
+{% set update_frequency_of_metadata_options = [
+        _('Once in Five Minutes'),
+        _('Hourly'),
+        _('Daily'),
+	_('Weekly'),
+	_('Fortnightly'),
+	_('Monthly'),
+	_('Quarterly'),
+	_('Biannually'),
+	_('Annually'),
+	_('Other Frequency'),
+	_('Irregular'),
+	_('Unknown'),
+	_('Not Planned / No Updating')
 ] -%}
 
 <div data-module="custom-fields">
 
 	{{ mmea_form.text(extras, 'Title', _('Title'), errors, 0) }}
 	{{ mmea_form.textarea(extras, 'Abstract', _('Abstract'), errors, 1) }}
-	{{ mmea_form.multiselect(extras, 'Topic Category', category_options, _('Topic Category'), errors, 2) }}
-	{{ mmea_form.text(extras, 'Keywords', _('Keywords'), errors, 3) }}
-	{{ mmea_form.text(extras, 'Language', _('Language'), errors, 4) }}
-	{{ mmea_form.text(extras, 'Datastream Availability', _('Datastream Availability'), errors, 5) }}
-	{{ mmea_form.text(extras, 'Formats', _('Formats'), errors, 6) }}
-	{{ mmea_form.text(extras, 'Spatial Representation Type', _('Spatial Representation Type'), errors, 7) }}
-	{{ mmea_form.text(extras, 'Spatial Resolution', _('Spatial Resolution'), errors, 8) }}
-	{{ mmea_form.text(extras, 'Scale Denominator', _('Scale Denominator'), errors, 9) }}
-	{{ mmea_form.text(extras, 'Geographic Extent', _('Geographic Extent'), errors, 10) }}
-	{{ mmea_form.text(extras, 'Reference System', _('Reference System'), errors, 11) }}
-	{{ mmea_form.text(extras, 'Vertical Reference System', _('Vertical Reference System'), errors, 12) }}
-	{{ mmea_form.text(extras, 'Temporal Extent Type', _('Temporal Extent Type'), errors, 13) }}
-	{{ mmea_form.text(extras, 'Temporal Extent', _('Temporal Extent'), errors, 14) }}
-	{{ mmea_form.text(extras, 'Temporal Resolution', _('Temporal Resolution'), errors, 15) }}
-	{{ mmea_form.text(extras, 'Lineage', _('Lineage'), errors, 16) }}
-	{{ mmea_form.text(extras, 'Processing Environment', _('Processing Environment'), errors, 17) }}
-	{{ mmea_form.text(extras, 'Data Quality', _('Data Quality'), errors, 18) }}
-	{{ mmea_form.text(extras, 'Graphic Overview', _('Graphic Overview'), errors, 19) }}
-	{{ mmea_form.text(extras, 'Responsible Organization', _('Responsible Organization'), errors, 20) }}
-	{{ mmea_form.text(extras, 'Point of Contact', _('Point of Contact'), errors, 21) }}
-	{{ mmea_form.text(extras, 'Update Frequency of the Resource', _('Update Frequency of the Resource'), errors, 22) }}
-	{{ mmea_form.text(extras, 'Update Frequency of the Metadata', _('Update Frequency of the Metadata'), errors, 23) }}
-	{{ mmea_form.text(extras, 'Units of Distribution', _('Units of Distribution'), errors, 24) }}
-	{{ mmea_form.text(extras, 'Transfer Size', _('Transfer Size'), errors, 25) }}
-	{{ mmea_form.text(extras, 'Content Information', _('Content Information'), errors, 26) }}
-	{{ mmea_form.text(extras, 'Constraints Related to Access and Use', _('Constraints Related to Access and Use'), errors, 27) }}
-	{{ mmea_form.text(extras, 'Fees', _('Fees'), errors, 28) }}
-	{{ mmea_form.text(extras, 'Linkage', _('Linkage'), errors, 29) }}
+	{{ mmea_form.multiselect(extras, 'Datastream Availability', yesno_options , _('Datastream Availability'), errors, 2) }}
+	{{ mmea_form.multiselect(extras, 'Format', format_options , _('Format'), errors, 3) }}
+	{{ mmea_form.text(extras, 'Responsible Organization', _('Responsible Organization'), errors, 4) }}
+	{{ mmea_form.multiselect(extras, 'Update Frequency of the Resource', update_frequency_of_resource_options, _('Update Frequency of the Resource'), errors, 5) }}
+	{{ mmea_form.text(extras, 'Fees', _('Fees'), errors, 6) }}
+	{{ mmea_form.text(extras, 'Constraints Related to Access and Use', _('Constraints Related to Access and Use'), errors, 7) }}
 
+
+	{{ mmea_form.multiselect(extras, 'Topic Category', category_options, _('Topic Category'), errors, 8) }}
+	{{ mmea_form.text(extras, 'Keywords', _('Keywords'), errors, 9) }}
+	{{ mmea_form.text(extras, 'Graphic Overview', _('Graphic Overview'), errors, 10) }}
+	{{ mmea_form.text(extras, 'Temporal Extent', _('Temporal Extent'), errors, 11) }}
+	{{ mmea_form.multiselect(extras, 'Temporal Extent Type', temporal_extent_type_options, _('Temporal Extent Type'), errors, 12) }}
+	{{ mmea_form.text(extras, 'Temporal Resolution', _('Temporal Resolution'), errors, 13) }}
+	{{ mmea_form.text(extras, 'Scale Denominator', _('Scale Denominator'), errors, 14) }}
+	{{ mmea_form.text(extras, 'Spatial Resolution', _('Spatial Resolution'), errors, 15) }}
+	{{ mmea_form.text(extras, 'Geographic Extent', _('Geographic Extent'), errors, 16) }}
+	{{ mmea_form.text(extras, 'Point of Contact', _('Point of Contact'), errors, 17) }}
+	{{ mmea_form.text(extras, 'Linkage', _('Linkage'), errors, 18) }}
+
+
+	{{ mmea_form.multiselect(extras, 'Language', language_options, _('Language'), errors, 19) }}
+	{{ mmea_form.text(extras, 'Spatial Representation Type', _('Spatial Representation Type'), errors, 20) }}
+	{{ mmea_form.text(extras, 'Reference System', _('Reference System'), errors, 21) }}
+	{{ mmea_form.text(extras, 'Vertical Reference System', _('Vertical Reference System'), errors, 22) }}
+	{{ mmea_form.text(extras, 'Lineage', _('Lineage'), errors, 23) }}
+	{{ mmea_form.text(extras, 'Processing Environment', _('Processing Environment'), errors, 24) }}
+	{{ mmea_form.text(extras, 'Data Quality', _('Data Quality'), errors, 25) }}
+	{{ mmea_form.multiselect(extras, 'Update Frequency of the Metadata', update_frequency_of_metadata_options, _('Update Frequency of the Metadata'), errors, 26) }}
+	{{ mmea_form.text(extras, 'Units of Distribution', _('Units of Distribution'), errors, 27) }}
+	{{ mmea_form.text(extras, 'Transfer Size', _('Transfer Size'), errors, 28) }}
+	{{ mmea_form.text(extras, 'Content Information', _('Content Information'), errors, 29) }}
+	
+	
 </div>
